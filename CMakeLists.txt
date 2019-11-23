@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(h07_bulk
     main.cpp
-    class_input.cpp
-    class_input.h
+    collect.cpp
+    collect.h
     class_out.h
     )

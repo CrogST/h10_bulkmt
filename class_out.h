@@ -3,8 +3,6 @@
 #include <iostream>
 #include <list>
 
-using cmd_list_t = std::list<std::string>;
-
 class out_base {
 public:
     virtual ~out_base() = default;
