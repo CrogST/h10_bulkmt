@@ -5,15 +5,15 @@
 
 using cmd_list_t = std::list<std::string>;
 
-class base {
+class out_base {
 public:
-    virtual ~base() = default;
+    virtual ~out_base() = default;
     virtual void write(std::string str) = 0;
 };
 
 class report;
 
-class log_out : base {
+class log_out : out_base {
 public:
     log_out(report * rp);
     void write(std::string str) override {
@@ -21,7 +21,7 @@ public:
     }
 };
 
-class write_out : base {
+class write_out : out_base {
 public:
     write_out(report * rp);
     void write(std::string str) override {
@@ -30,9 +30,9 @@ public:
 };
 
 class report {
-    std::list<base *> subs;
+    std::list<out_base *> subs;
 public:
-    void subscribe(base * ptr) {
+    void subscribe(out_base * ptr) {
         subs.push_back(ptr);
     }
     void notify_all(std::string str) {
