@@ -14,9 +14,8 @@ class collect {
     enum type {
         collect_n,
         collect_wait
-    } handle_type; //want to make it func_ptr, but can't do it.
+    } handle_type; //want to make it func_ptr, but it wasn't work
 
-    std::string convert(cmd_list_t ls);
     res_t done();
     res_t collect_clever(std::string val);
     res_t collect_N(std::string val);
@@ -24,4 +23,5 @@ class collect {
 public:
     collect();
     res_t handle(std::string str);
+    res_t get_now();
 };

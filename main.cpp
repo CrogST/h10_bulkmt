@@ -17,5 +17,8 @@ int main()
         if(res) rp.notify_all(res.value());
     }
 
+    auto res = col.get_now();
+    if(res) rp.notify_all(res.value());
+
     return 0;
 }

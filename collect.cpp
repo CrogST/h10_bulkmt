@@ -1,14 +1,6 @@
 
 #include "collect.h"
 
-std::string collect::convert(cmd_list_t ls) {
-    std::string str;
-    for(const auto & el : ls) {
-        str += el + " ";
-    }
-    return str;
-}
-
 res_t collect::done() {
     cmd_list_t res = std::move(ls);
     ls.clear();
@@ -64,4 +56,10 @@ res_t collect::handle(std::string str) {
     case type::collect_n: return collect_N(str);
     case type::collect_wait: return collect_clever(str);
     }
+}
+
+res_t collect::get_now() {
+    if(handle_type == type::collect_n)
+        return done();
+    else return std::nullopt;
 }
