@@ -3,10 +3,12 @@
 #include <iostream>
 #include <list>
 
+#include "user_types.h"
+
 class out_base {
 public:
     virtual ~out_base() = default;
-    virtual void write(std::string str) = 0;
+    virtual void write(cmd_list_t str) = 0;
 };
 
 class report;
@@ -14,16 +16,22 @@ class report;
 class log_out : out_base {
 public:
     log_out(report * rp);
-    void write(std::string str) override {
-        std::cout << "log: " << __FUNCTION__ << ": " << str << std::endl;
+    void write(cmd_list_t val) override {
+        std::cout << "log: " << __FUNCTION__ << ": ";
+        for(const auto & el : val)
+         std::cout << el << " ";
+        std::cout << std::endl;
     }
 };
 
 class write_out : out_base {
 public:
     write_out(report * rp);
-    void write(std::string str) override {
-        std::cout << "file: " << __FUNCTION__ << ": " << str << std::endl;
+    void write(cmd_list_t val) override {
+        std::cout << "file: " << __FUNCTION__ << ": " << std::endl;
+        for(const auto & el : val)
+            std::cout << el << std::endl;
+        std::cout << "end of file" << std::endl;
     }
 };
 
@@ -33,9 +41,9 @@ public:
     void subscribe(out_base * ptr) {
         subs.push_back(ptr);
     }
-    void notify_all(std::string str) {
+    void notify_all(cmd_list_t val) {
         for(auto & el : subs) {
-            el->write(str);
+            el->write(val);
         }
     }
 };

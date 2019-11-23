@@ -3,8 +3,9 @@
 #include <list>
 #include <optional>
 
-using cmd_list_t = std::list<std::string>;
-using res_t = std::optional<std::string>;
+#include "user_types.h"
+
+using res_t = std::optional<cmd_list_t>;
 
 class collect {
     bool first;
@@ -16,6 +17,7 @@ class collect {
     } handle_type; //want to make it func_ptr, but can't do it.
 
     std::string convert(cmd_list_t ls);
+    res_t done();
     res_t collect_clever(std::string val);
     res_t collect_N(std::string val);
 

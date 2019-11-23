@@ -9,6 +9,12 @@ std::string collect::convert(cmd_list_t ls) {
     return str;
 }
 
+res_t collect::done() {
+    cmd_list_t res = std::move(ls);
+    ls.clear();
+    return std::move(res);
+}
+
 res_t collect::collect_clever(std::string val) {
     static int deep_cnt = 1;
     if(val.size() == 1) {
@@ -18,9 +24,7 @@ res_t collect::collect_clever(std::string val) {
             deep_cnt--;
             if(deep_cnt == 0) {
                 handle_type = type::collect_n;
-                auto res = convert(ls);
-                ls.clear();
-                return std::move(res);
+                return done();
             }
         } else {
             ls.push_back(val);
@@ -39,16 +43,11 @@ res_t collect::collect_N(std::string val) {
     } else {
         if(val.size() == 1 && val[0] == '{') {
             handle_type = type::collect_wait;
-            //и начать накапливать
-            auto res = convert(ls);
-            ls.clear();
-            return std::move(res);
+            return done();
         } else {
             ls.push_back(val);
             if(ls.size() >= N) {
-                auto res = convert(ls);
-                ls.clear();
-                return std::move(res);
+                return done();
             }
         }
     }
