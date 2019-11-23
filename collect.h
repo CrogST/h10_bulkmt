@@ -8,8 +8,7 @@
 using res_t = std::optional<cmd_list_t>;
 
 class collect {
-    bool first;
-    unsigned int N;
+    unsigned int N; /// \brief задаваемый размер блока
     cmd_list_t ls;
     enum type {
         collect_n,
@@ -21,7 +20,7 @@ class collect {
     res_t collect_N(std::string val);
 
 public:
-    collect();
+    collect(unsigned int n);
     res_t handle(std::string str);
     res_t get_now();
 };
