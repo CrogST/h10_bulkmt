@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
+#include <chrono>
 #include <list>
 
 #include "user_types.h"
@@ -17,9 +19,11 @@ class log_out : out_base {
 public:
     log_out(report * rp);
     void write(cmd_list_t val) override {
-        std::cout << "log: " << __FUNCTION__ << ": ";
-        for(const auto & el : val)
-         std::cout << el << " ";
+        std::cout << "bulk:";
+        for(auto el = val.begin(); el != val.end(); el++) {
+            if(el != val.begin()) std::cout << ",";
+            std::cout << " " << *el;
+        }
         std::cout << std::endl;
     }
 };
@@ -28,10 +32,16 @@ class write_out : out_base {
 public:
     write_out(report * rp);
     void write(cmd_list_t val) override {
-        std::cout << "file: " << __FUNCTION__ << ": " << std::endl;
-        for(const auto & el : val)
-            std::cout << el << std::endl;
-        std::cout << "end of file" << std::endl;
+
+        auto now = std::chrono::system_clock::now();
+        auto cnt = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+        auto name = std::to_string(cnt.count());
+        std::ofstream myfile;
+        myfile.open (name);
+        for(const auto & el : val) {
+            myfile << el << std::endl;
+        }
+        myfile.close();
     }
 };
 
