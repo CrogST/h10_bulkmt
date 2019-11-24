@@ -2,15 +2,13 @@
 
 #include <iostream>
 #include <fstream>
-#include <chrono>
-#include <list>
 
 #include "user_types.h"
 
 class out_base {
 public:
     virtual ~out_base() = default;
-    virtual void write(cmd_list_t str) = 0;
+    virtual void write(cmd_list_t str, time_point_t tp) = 0;
 };
 
 class report;
@@ -18,7 +16,7 @@ class report;
 class log_out : out_base {
 public:
     log_out(report * rp);
-    void write(cmd_list_t val) override {
+    void write(cmd_list_t val, time_point_t) override {
         std::cout << "bulk:";
         for(auto el = val.begin(); el != val.end(); el++) {
             if(el != val.begin()) std::cout << ",";
@@ -31,13 +29,12 @@ public:
 class write_out : out_base {
 public:
     write_out(report * rp);
-    void write(cmd_list_t val) override {
+    void write(cmd_list_t val, time_point_t tp) override {
 
-        auto now = std::chrono::system_clock::now();
-        auto cnt = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+        auto cnt = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch());
         auto name = std::to_string(cnt.count());
         std::ofstream myfile;
-        myfile.open (name);
+        myfile.open ("bulk" + name + ".log");
         for(const auto & el : val) {
             myfile << el << std::endl;
         }
@@ -51,9 +48,9 @@ public:
     void subscribe(out_base * ptr) {
         subs.push_back(ptr);
     }
-    void notify_all(cmd_list_t val) {
+    void notify_all(cmd_list_t val, time_point_t time) {
         for(auto & el : subs) {
-            el->write(val);
+            el->write(val, time);
         }
     }
 };

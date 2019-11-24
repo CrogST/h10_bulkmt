@@ -1,15 +1,17 @@
 #pragma once
 
-#include <list>
 #include <optional>
 
 #include "user_types.h"
 
-using res_t = std::optional<cmd_list_t>;
+using res_t = std::optional<std::pair<cmd_list_t, time_point_t>>;
 
 class collect {
     unsigned int N; /// \brief задаваемый размер блока
     cmd_list_t ls;
+    int deep_cnt = 1;
+    time_point_t save_time;
+
     enum type {
         collect_n,
         collect_wait

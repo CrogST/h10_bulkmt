@@ -16,12 +16,19 @@ int main(int argc, char *argv[])
     collect col{n};
     for(std::string line; std::getline(std::cin, line); )
     {
-        auto res = col.handle(line);
-        if(res) rp.notify_all(res.value());
+        auto res = col.handle(line);        
+        if(res) {
+            auto val = res.value();
+            rp.notify_all(std::get<0>(val), std::get<1>(val));
+        }
     }
 
     auto res = col.get_now();
-    if(res) rp.notify_all(res.value());
+    auto val = res.value();
+    if(res) {
+        auto val = res.value();
+        rp.notify_all(std::get<0>(val), std::get<1>(val));
+    }
 
     return 0;
 }

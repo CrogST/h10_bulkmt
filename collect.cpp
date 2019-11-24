@@ -4,11 +4,10 @@
 res_t collect::done() {
     cmd_list_t res = std::move(ls);
     ls.clear();
-    return std::move(res);
+    return std::make_pair(std::move(res), save_time);
 }
 
-res_t collect::collect_clever(std::string val) {
-    static int deep_cnt = 1;
+res_t collect::collect_clever(std::string val) {    
     if(val.compare("{") == 0) {
         deep_cnt++;
     } else if(val.compare("}") == 0) {
@@ -18,6 +17,8 @@ res_t collect::collect_clever(std::string val) {
             return done();
         }
     } else {
+        if(ls.size() == 0)
+            save_time = std::chrono::system_clock::now();
         ls.push_back(val);
     }
     return std::nullopt;
@@ -28,6 +29,8 @@ res_t collect::collect_N(std::string val) {
         handle_type = type::collect_wait;
         return done();
     } else {
+        if(ls.size() == 0)
+            save_time = std::chrono::system_clock::now();
         ls.push_back(val);
         if(ls.size() >= N) {
             return done();
