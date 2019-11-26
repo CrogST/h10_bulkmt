@@ -23,7 +23,7 @@ set_target_properties(bulk PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
-)
+    )
 
 #настройка создания пакета
 install(TARGETS bulk RUNTIME DESTINATION bin)
