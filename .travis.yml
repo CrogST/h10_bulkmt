@@ -26,9 +26,10 @@ deploy:
     edge: true
     script:
     - curl -f -T bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ucrogst:$bintray_api_key "https://api.bintray.com/content/crogst/Repository/otus-cpp/$TRAVIS_BUILD_NUMBER/bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
-  - provider: pages:git
-    token: $GITHUB_TOKEN
-    edge: true
+  - provider: pages
+    skip_cleanup: true
+    keep_history: true
+    github_token: $GITHUB_TOKEN
     local_dir: html
     on:
       branch: master
