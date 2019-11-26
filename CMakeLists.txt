@@ -17,6 +17,7 @@ add_executable(bulk
     collect.h
     class_out.h
     .travis.yml
+    .doxygen.conf
     )
 
 set_target_properties(bulk PROPERTIES
