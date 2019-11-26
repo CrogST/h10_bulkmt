@@ -17,6 +17,7 @@ script:
 - cmake --build .
 #- cmake --build . --target test
 - cmake --build . --target package
+- doxygen .doxygen.conf
 - printenv
 deploy:
   provider: script
