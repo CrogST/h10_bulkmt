@@ -9,6 +9,7 @@ addons:
     - libboost-test-dev
     - g++-7
     - doxygen
+    - graphviz
 env:
   - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 before_install:
@@ -21,14 +22,13 @@ script:
 - doxygen .doxygen.conf
 #- printenv
 deploy:
-  provider: script
-  edge: true
-  script:
-  - curl -f -T bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ucrogst:$bintray_api_key "https://api.bintray.com/content/crogst/Repository/otus-cpp/$TRAVIS_BUILD_NUMBER/bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
-deploy:
-  provider: pages
-  edge: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
-    local_dir: doc
+  - provider: script
+    edge: true
+    script:
+    - curl -f -T bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ucrogst:$bintray_api_key "https://api.bintray.com/content/crogst/Repository/otus-cpp/$TRAVIS_BUILD_NUMBER/bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
+  - provider: pages
+    edge: true
+    github_token: $GITHUB_TOKEN
+    on:
+      branch: master
+      local_dir: doc
