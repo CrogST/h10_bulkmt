@@ -3,23 +3,23 @@ language: cpp
 compiler: gcc
 addons:
   apt:
-    sources:
-    - ubuntu-toolchain-r-test
+#    sources:
+#    - ubuntu-toolchain-r-test
     packages:
     - libboost-test-dev
     - g++-7    
     - doxygen
-env:
-  - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-before_install:
-    - eval "${MATRIX_EVAL}"
+#env:
+#  - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+#before_install:
+#    - eval "${MATRIX_EVAL}"
 script:
 - cmake .
 - cmake --build .
 #- cmake --build . --target test
 - cmake --build . --target package
 - doxygen .doxygen.conf
-- printenv
+#- printenv
 deploy:
   provider: script
   edge: true
@@ -28,6 +28,7 @@ deploy:
 deploy:
   provider: pages
   edge: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  github_token: $GITHUB_TOKEN
   on:
     branch: master
+    local_dir: doc
