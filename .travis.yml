@@ -8,6 +8,7 @@ addons:
     packages:
     - libboost-test-dev
     - g++-7    
+    - doxygen
 env:
   - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 before_install:
