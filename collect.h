@@ -9,7 +9,7 @@ using res_t = std::optional<std::pair<cmd_list_t, time_point_t>>;
 class collect {
     unsigned int N; /// \brief задаваемый размер блока
     cmd_list_t ls;
-    int deep_cnt = 1;
+    int deep_cnt = 0;
     time_point_t save_time;
 
     enum type {

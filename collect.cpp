@@ -2,6 +2,7 @@
 #include "collect.h"
 
 res_t collect::done() {
+    if(ls.size() == 0) return std::nullopt;
     cmd_list_t res = std::move(ls);
     ls.clear();
     return std::make_pair(std::move(res), save_time);
@@ -27,6 +28,7 @@ res_t collect::collect_clever(std::string val) {
 res_t collect::collect_N(std::string val) {
     if(val.compare("{") == 0) {
         handle_type = type::collect_wait;
+        collect_clever(val);
         return done();
     } else {
         if(ls.size() == 0)
@@ -48,6 +50,7 @@ res_t collect::handle(std::string str) {
     case type::collect_n: return collect_N(str);
     case type::collect_wait: return collect_clever(str);
     }
+    return std::nullopt;
 }
 
 res_t collect::get_now() {
