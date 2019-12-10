@@ -14,20 +14,22 @@ int main(int argc, char *argv[])
     write_out fl(&rp);
 
     collect col{n};
-    for(std::string line; std::getline(std::cin, line); )
-    {
-        auto res = col.handle(line);
+
+    auto notify_handle = [&rp](res_t res) {
         if(res) {
             auto val = res.value();
             rp.notify_all(std::get<0>(val), std::get<1>(val));
         }
+    };
+
+    for(std::string line; std::getline(std::cin, line); )
+    {
+        auto res = col.handle(line);
+        notify_handle(res);
     }
 
     auto res = col.get_now();
-    if(res) {
-        auto val = res.value();
-        rp.notify_all(std::get<0>(val), std::get<1>(val));
-    }
+    notify_handle(res);
 
     return 0;
 }
