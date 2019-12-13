@@ -4,14 +4,16 @@ if(NOT DEFINED ENV{TRAVIS_BUILD_NUMBER})
     set(ENV{TRAVIS_BUILD_NUMBER} 1)
 endif()
 
-project(h07_bulk
+project(h10_bulkmt
     LANGUAGES CXX
     VERSION 0.0.0$ENV{TRAVIS_BUILD_NUMBER})
+
+set(bin_name bulkmt)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(bulk
+add_executable(${bin_name}
     main.cpp
     collect.cpp
     collect.h
@@ -20,15 +22,15 @@ add_executable(bulk
     .doxygen.conf
     )
 
-set_target_properties(bulk PROPERTIES
+set_target_properties(${bin_name} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
     )
 
 #настройка создания пакета
-install(TARGETS bulk RUNTIME DESTINATION bin)
-set(CPACK_PACKAGE_NAME bulk)
+install(TARGETS ${bin_name} RUNTIME DESTINATION bin)
+set(CPACK_PACKAGE_NAME ${bin_name})
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
