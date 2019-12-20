@@ -16,7 +16,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(${bin_name}
     main.cpp
     collect.cpp
-    collect.h
     class_out.h
     .travis.yml
     .doxygen.conf
@@ -26,7 +25,15 @@ set_target_properties(${bin_name} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
+    COMPILE_OPTIONS "-pthread"
+    LINK_FLAGS "-pthread"
+#    COMPILE_OPTIONS "-fsanitize=thread"
+#    LINK_FLAGS "-fsanitize=thread"
     )
+
+target_link_libraries(${bin_name}
+  ${CMAKE_THREAD_LIBS_INIT}
+  )
 
 #настройка создания пакета
 install(TARGETS ${bin_name} RUNTIME DESTINATION bin)

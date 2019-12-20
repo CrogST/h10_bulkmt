@@ -1,8 +1,11 @@
 
 #include <optional>
+#include <vector>
+#include <chrono>
 
 #include "collect.h"
 #include "class_out.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -11,25 +14,39 @@ int main(int argc, char *argv[])
 
     report rp;
     log_out log(&rp);
-    write_out fl(&rp);
+    write_out fl1(&rp, true);
+    write_out fl2(&rp, false);
 
     collect col{n};
 
-    auto notify_handle = [&rp](res_t res) {
-        if(res) {
-            auto val = res.value();
-            rp.notify_all(std::get<0>(val), std::get<1>(val));
-        }
+    std::thread t1(&out_base::thread_exec, &fl1);
+    std::thread t2(&out_base::thread_exec, &fl2);
+    std::thread t3(&out_base::thread_exec, &log);
+
+    auto notify_handler = [&](res_t res) {
+        auto val = res.value();
+        auto ls = std::get<0>(val);
+        auto tp = std::get<1>(val);
+        log.signal(ls, tp);
+        fl1.signal(ls, tp);
+        fl2.signal(ls, tp);
     };
 
     for(std::string line; std::getline(std::cin, line); )
     {
         auto res = col.handle(line);
-        notify_handle(res);
+        if(res) notify_handler(res);
     }
-
     auto res = col.get_now();
-    notify_handle(res);
+    if(res) notify_handler(res);
+
+    fl1.quite();
+    fl2.quite();
+    log.quite();
+
+    t1.join();
+    t2.join();
+    t3.join();
 
     return 0;
 }
