@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
 
     report rp;
     log_out log(&rp);
-    write_out fl1(&rp, true);
-    write_out fl2(&rp, false);
+    write_out fl1(&rp);
+    write_out fl2(&rp);
 
     collect col{n};
 

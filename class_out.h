@@ -9,7 +9,7 @@
 
 #include "user_types.h"
 
-const bool test_log = false;
+const bool test_log = true;
 #define _log(x) if(test_log) std::cout << x
 
 class out_base {
@@ -31,12 +31,12 @@ public:
     }
     void thread_exec() {
         std::unique_lock<std::mutex> lk(mx);
-        _log(std::this_thread::get_id() << ": " << "started" << std::endl);
+        _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl);
         while(!q) {
-            _log(std::this_thread::get_id() << ": wait" << std::endl);
+            _log("thread " << std::this_thread::get_id() << ": wait" << std::endl);
             sleep = true;
             cv.wait(lk, [&] { return !sleep; } );
-            _log(std::this_thread::get_id() << ": " << "work" << std::endl);
+            _log("thread " << std::this_thread::get_id() << ": " << "work" << std::endl);
             write();
         }
     }
@@ -62,15 +62,18 @@ public:
 };
 
 class write_out : public out_base {
-
-    bool active;
+    int ind;
+    static int id_cnt; //число объектов
 
 public:
-    write_out(report * rp, bool act);
+    write_out(report * rp);
     void write() override
     {
-        active = !active;
-        if(!active) return;
+        //механизм поочередной обработки событий
+        ind = (ind + 1) % id_cnt;
+        if(ind % id_cnt != 1) {
+            return;
+        }
 
         //get id
         std::stringstream id_ss;
@@ -83,7 +86,7 @@ public:
 
         std::ofstream myfile;
         myfile.open(file_name);
-        _log("file: " << file_name << " cont: ");
+        _log("file: " << file_name << " content: ");
         for(const auto & el : ls) {
             myfile << el << std::endl;
             _log(el);
@@ -92,6 +95,8 @@ public:
         myfile.close();
     }
 };
+
+int write_out::id_cnt = 0;
 
 class report {
     std::list<out_base *> subs;
@@ -110,6 +115,9 @@ log_out::log_out(report * rp) {
     rp->subscribe(this);
 }
 
-write_out::write_out(report * rp, bool act)  : active(act) {
+write_out::write_out(report * rp) {
+    ind = id_cnt++;
+    _log("create write_file with id = " << ind << ", ");
+    _log("cnt = " << id_cnt << std::endl);
     rp->subscribe(this);
 }
