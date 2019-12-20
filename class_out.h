@@ -82,7 +82,7 @@ public:
         //create file name
         auto cnt = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch());
         auto name = std::to_string(cnt.count());
-        auto file_name = "bulk" + name + id_ss.str() + ".log";
+        auto file_name = "bulk" + name + "_" + id_ss.str() + ".log";
 
         std::ofstream myfile;
         myfile.open(file_name);
