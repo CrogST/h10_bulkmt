@@ -2,6 +2,7 @@
 #include <optional>
 #include <vector>
 #include <chrono>
+#include <future>
 
 #include "collect.h"
 #include "class_out.h"
@@ -19,9 +20,9 @@ int main(int argc, char *argv[])
 
     collect col{n};
 
-    std::thread t1(&out_base::thread_exec, &fl1);
-    std::thread t2(&out_base::thread_exec, &fl2);
-    std::thread t3(&out_base::thread_exec, &log);
+    auto t1 = std::async(std::launch::async, &out_base::thread_exec, &fl1);
+    auto t2 = std::async(std::launch::async, &out_base::thread_exec, &fl2);
+    auto t3 = std::async(std::launch::async, &out_base::thread_exec, &log);
 
     auto notify_handler = [&](res_t res) {
         auto val = res.value();
@@ -32,8 +33,11 @@ int main(int argc, char *argv[])
         fl2.signal(ls, tp);
     };
 
+    int line_cnt = 0;
     for(std::string line; std::getline(std::cin, line); )
     {
+        if(line.length() == 0) break;
+        line_cnt++;
         auto res = col.handle(line);
         if(res) notify_handler(res);
     }
@@ -44,9 +48,20 @@ int main(int argc, char *argv[])
     fl2.quite();
     log.quite();
 
-    t1.join();
-    t2.join();
-    t3.join();
+    int cmd;
+    int blocks;
+    std::tie(cmd, blocks) = t1.get();
+    std::cout << "file1 thread. " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
+    std::tie(cmd, blocks) = t2.get();
+    std::cout << "file2 thread. " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
+    std::tie(cmd, blocks) = t3.get();
+    std::cout << "log thread. " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
+
+    std::cout << "main thread. "
+              << "blocks: " << blocks << ", "
+              << "commands: " << cmd << ", "
+              << "lines: " << line_cnt
+              << std::endl;
 
     return 0;
 }

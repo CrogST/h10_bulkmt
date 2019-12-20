@@ -10,39 +10,58 @@
 #include "user_types.h"
 
 const bool test_log = true;
-#define _log(x) if(test_log) std::cout << x
+static std::mutex log_mx;
+#define _log(x) if(test_log) { \
+    std::lock_guard<std::mutex> g(log_mx); \
+    std::cout << x; \
+    }
 
 class out_base {
 protected:
-    cmd_list_t ls;
-    time_point_t tp;
+    //метрики
+    int blocks_cnt = 0;
+    int cmd_cnt = 0;
+
+    cmd_list_t ls; //список полученных блоков
+    time_point_t tp; //время получения блока
+    //для потока
     std::mutex mx;
     std::condition_variable cv;
     bool sleep = true;
-    virtual void write() = 0;
     bool q = false;
+
+    virtual void write() = 0;
+
 public:
     virtual ~out_base() = default;
-    void signal(cmd_list_t s, time_point_t t) {
+    virtual void signal(cmd_list_t s, time_point_t t) {
+        //запоминаем полученные данные
         ls = s;
         tp = t;
+        //метрики
+        blocks_cnt++;
+        cmd_cnt += s.size();
+        //пробуждаем поток
         sleep = false;
         cv.notify_one();
     }
-    void thread_exec() {
+    auto thread_exec() {
         std::unique_lock<std::mutex> lk(mx);
-        _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl);
+        _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl)
         while(!q) {
-            _log("thread " << std::this_thread::get_id() << ": wait" << std::endl);
+            _log("thread " << std::this_thread::get_id() << ": wait" << std::endl)
             sleep = true;
-            cv.wait(lk, [&] { return !sleep; } );
-            _log("thread " << std::this_thread::get_id() << ": " << "work" << std::endl);
-            write();
+            cv.wait(lk, [&] { return !sleep || q; } );
+            _log("thread " << std::this_thread::get_id() << ": " << "wake up" << std::endl)
+            if(!sleep) write();
         }
+        _log("thread " << std::this_thread::get_id() << ": " << "quit" << std::endl)
+        return std::tuple(cmd_cnt, blocks_cnt);
     }
 
     void quite() {
         q = true;
+        cv.notify_one();
     }
 };
 
@@ -62,19 +81,27 @@ public:
 };
 
 class write_out : public out_base {
+    int id;
     int ind;
     static int id_cnt; //число объектов
 
 public:
-    write_out(report * rp);
-    void write() override
-    {
+
+    void signal(cmd_list_t s, time_point_t t) override {
         //механизм поочередной обработки событий
         ind = (ind + 1) % id_cnt;
         if(ind % id_cnt != 1) {
+            _log("file_obj. id = " << id << " rest" << std::endl)
             return;
         }
+        _log("file_obj. id = " << id << " write" << std::endl)
 
+        out_base::signal(s, t);
+    }
+
+    write_out(report * rp);
+    void write() override
+    {
         //get id
         std::stringstream id_ss;
         id_ss << std::this_thread::get_id();
@@ -86,12 +113,12 @@ public:
 
         std::ofstream myfile;
         myfile.open(file_name);
-        _log("file: " << file_name << " content: ");
+        _log("file: " << file_name << " content: ")
         for(const auto & el : ls) {
             myfile << el << std::endl;
-            _log(el);
+            _log(el)
         }
-        _log(std::endl);
+        _log(std::endl)
         myfile.close();
     }
 };
@@ -116,8 +143,9 @@ log_out::log_out(report * rp) {
 }
 
 write_out::write_out(report * rp) {
-    ind = id_cnt++;
-    _log("create write_file with id = " << ind << ", ");
-    _log("cnt = " << id_cnt << std::endl);
+    id = id_cnt++;
+    ind = id;
+    _log("create file_obj. id = " << id << ", " <<
+         "cnt = " << id_cnt << std::endl)
     rp->subscribe(this);
 }
