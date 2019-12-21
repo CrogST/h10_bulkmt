@@ -16,6 +16,16 @@ static std::mutex log_mx;
     std::cout << x; \
     }
 
+auto fib(int n) {
+    if(n<=2) return 1;
+    return fib(n-1) + fib(n-2);
+}
+
+auto fact(int n) {
+    if(n == 0) return 1;
+    return n * fact(n-1);
+}
+
 class out_base {
 protected:
     //метрики
@@ -74,7 +84,7 @@ public:
         std::cout << "bulk:";
         for(auto el = ls.begin(); el != ls.end(); el++) {
             if(el != ls.begin()) std::cout << ",";
-            std::cout << " " << *el;
+            std::cout << " " << fact(std::stoi(*el));
         }
         std::cout << std::endl;
     }
@@ -115,8 +125,9 @@ public:
         myfile.open(file_name);
         _log("file: " << file_name << " content: ")
         for(const auto & el : ls) {
-            myfile << el << std::endl;
-            _log(el)
+            auto val = fib(std::stoi(el));
+            myfile << val << std::endl;
+            _log(val)
         }
         _log(std::endl)
         myfile.close();
