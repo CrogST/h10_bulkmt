@@ -9,7 +9,7 @@
 
 #include "user_types.h"
 
-const bool test_log = true;
+const bool test_log = false;
 static std::mutex log_mx;
 #define _log(x) if(test_log) { \
     std::lock_guard<std::mutex> g(log_mx); \
