@@ -76,7 +76,7 @@ public:
         _log("thread " << std::this_thread::get_id() << ": " << "quit" << std::endl)
         return std::tuple(cmd_cnt, blocks_cnt);
     }
-    void quite() {
+    void drop() {
         q = true;
         cv.notify_one();
     }
@@ -158,6 +158,11 @@ public:
     void notify_all(cmd_list_t val, time_point_t time) {
         for(auto & el : subs) {
             el->signal(val, time);
+        }
+    }
+    void drop_all() {
+        for(auto & el : subs) {
+            el->drop();
         }
     }
 };
