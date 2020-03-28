@@ -13,10 +13,10 @@ class collect {
     int deep_cnt = 0;
     time_point_t save_time;
 
-    enum type {
-        collect_n,
-        collect_wait
-    } handle_type; //want to make it func_ptr, but it wasn't work
+    enum mode {
+        n,
+        block
+    } handle_mode; //want to make it func_ptr, but it wasn't work
 
     res_opt_t done();
     res_opt_t collect_clever(std::string val);

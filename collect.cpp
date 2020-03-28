@@ -14,7 +14,7 @@ res_opt_t collect::collect_clever(std::string val) {
     } else if(val.compare("}") == 0) {
         deep_cnt--;
         if(deep_cnt == 0) {
-            handle_type = type::collect_n;
+            handle_mode = mode::n;
             return done();
         }
     } else {
@@ -27,7 +27,7 @@ res_opt_t collect::collect_clever(std::string val) {
 
 res_opt_t collect::collect_N(std::string val) {
     if(val.compare("{") == 0) {
-        handle_type = type::collect_wait;
+        handle_mode = mode::block;
         collect_clever(val);
         return done();
     } else {
@@ -42,18 +42,18 @@ res_opt_t collect::collect_N(std::string val) {
 }
 
 collect::collect(unsigned int n) : N(n) {
-    handle_type = type::collect_n;
+    handle_mode = mode::n;
 }
 
 res_opt_t collect::handle(std::string str) {
-    switch (handle_type) {
-    case type::collect_n: return collect_N(str);
-    case type::collect_wait: return collect_clever(str);
+    switch (handle_mode) {
+    case mode::n: return collect_N(str);
+    case mode::block: return collect_clever(str);
     }
 }
 
 res_opt_t collect::get_rest() {
-    if(handle_type == type::collect_n)
+    if(handle_mode == mode::n)
         return done();
     else return std::nullopt;
 }
