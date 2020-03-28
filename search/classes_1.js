@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log_5fout',['log_out',['../classlog__out.html',1,'']]]
+  ['report',['report',['../classreport.html',1,'']]]
 ];

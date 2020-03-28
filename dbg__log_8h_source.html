@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>My Project: user_types.h File Reference</title>
+<title>My Project: dbg_log.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,6 +64,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
+</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -78,70 +79,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">user_types.h File Reference</div>  </div>
+<div class="title">dbg_log.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;list&gt;</code><br />
-<code>#include &lt;chrono&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for user_types.h:</div>
-<div class="dyncontent">
-<div class="center"><img src="user__types_8h__incl.png" border="0" usemap="#user__types_8h" alt=""/></div>
-<map name="user__types_8h" id="user__types_8h">
-</map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="user__types_8h__dep__incl.png" border="0" usemap="#user__types_8hdep" alt=""/></div>
-<map name="user__types_8hdep" id="user__types_8hdep">
-<area shape="rect" id="node2" href="collect_8h.html" title="collect.h" alt="" coords="68,80,143,107"/>
-<area shape="rect" id="node3" href="collect_8cpp.html" title="collect.cpp" alt="" coords="5,155,96,181"/>
-<area shape="rect" id="node4" href="main_8cpp.html" title="main.cpp" alt="" coords="121,155,202,181"/>
-</map>
-</div>
-</div>
-<p><a href="user__types_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ab91e48949abe3320051cfa7e864287a0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="user__types_8h.html#ab91e48949abe3320051cfa7e864287a0">cmd_list_t</a> = std::list&lt; std::string &gt;</td></tr>
-<tr class="separator:ab91e48949abe3320051cfa7e864287a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1696a9e652482a90f0c5e1c7d0eb5c61"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="user__types_8h.html#a1696a9e652482a90f0c5e1c7d0eb5c61">time_point_t</a> = std::chrono::system_clock::time_point</td></tr>
-<tr class="separator:a1696a9e652482a90f0c5e1c7d0eb5c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ab91e48949abe3320051cfa7e864287a0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="user__types_8h.html#ab91e48949abe3320051cfa7e864287a0">cmd_list_t</a> =  std::list&lt;std::string&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a1696a9e652482a90f0c5e1c7d0eb5c61"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="user__types_8h.html#a1696a9e652482a90f0c5e1c7d0eb5c61">time_point_t</a> =  std::chrono::system_clock::time_point</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<a href="dbg__log_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;mutex&gt;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">    6</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a> = <span class="keyword">false</span>;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">static</span> std::mutex log_mx;</div><div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="dbg__log_8h.html#ae8821f1a1c2badad3b2649393928e468">    8</a></span>&#160;<span class="preprocessor">#define _log(x) if(test_log) { \</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">    std::lock_guard&lt;std::mutex&gt; g(log_mx); \</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">    std::cout &lt;&lt; x; \</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">    }</span></div><div class="ttc" id="dbg__log_8h_html_a1bd75869078629806f80aa3dd190a490"><div class="ttname"><a href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a></div><div class="ttdeci">const bool test_log</div><div class="ttdef"><b>Definition:</b> dbg_log.h:6</div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

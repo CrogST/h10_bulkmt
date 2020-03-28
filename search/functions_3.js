@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['handle',['handle',['../classcollect.html#a08cbe31fb7b3c98d43f78ae39f1ad589',1,'collect']]]
+  ['handle',['handle',['../classcollect.html#ae364551d251dcf7306d81255c56437c1',1,'collect']]]
 ];

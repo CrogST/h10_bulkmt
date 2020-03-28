@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_5fnow',['get_now',['../classcollect.html#a553cfc8b8f7791a990e08747bd2052ca',1,'collect']]]
+  ['get_5frest',['get_rest',['../classcollect.html#a54db5415607b1c8073b9f38b5442150d',1,'collect']]]
 ];

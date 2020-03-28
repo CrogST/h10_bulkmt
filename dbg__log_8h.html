@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>My Project: user_types.h File Reference</title>
+<title>My Project: dbg_log.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,60 +81,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">user_types.h File Reference</div>  </div>
+<div class="title">dbg_log.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;list&gt;</code><br />
-<code>#include &lt;chrono&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for user_types.h:</div>
+Include dependency graph for dbg_log.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="user__types_8h__incl.png" border="0" usemap="#user__types_8h" alt=""/></div>
-<map name="user__types_8h" id="user__types_8h">
-</map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="user__types_8h__dep__incl.png" border="0" usemap="#user__types_8hdep" alt=""/></div>
-<map name="user__types_8hdep" id="user__types_8hdep">
-<area shape="rect" id="node2" href="collect_8h.html" title="collect.h" alt="" coords="68,80,143,107"/>
-<area shape="rect" id="node3" href="collect_8cpp.html" title="collect.cpp" alt="" coords="5,155,96,181"/>
-<area shape="rect" id="node4" href="main_8cpp.html" title="main.cpp" alt="" coords="121,155,202,181"/>
+<div class="center"><img src="dbg__log_8h__incl.png" border="0" usemap="#dbg__log_8h" alt=""/></div>
+<map name="dbg__log_8h" id="dbg__log_8h">
 </map>
 </div>
 </div>
-<p><a href="user__types_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="dbg__log_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ab91e48949abe3320051cfa7e864287a0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="user__types_8h.html#ab91e48949abe3320051cfa7e864287a0">cmd_list_t</a> = std::list&lt; std::string &gt;</td></tr>
-<tr class="separator:ab91e48949abe3320051cfa7e864287a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1696a9e652482a90f0c5e1c7d0eb5c61"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="user__types_8h.html#a1696a9e652482a90f0c5e1c7d0eb5c61">time_point_t</a> = std::chrono::system_clock::time_point</td></tr>
-<tr class="separator:a1696a9e652482a90f0c5e1c7d0eb5c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae8821f1a1c2badad3b2649393928e468"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#ae8821f1a1c2badad3b2649393928e468">_log</a>(x)</td></tr>
+<tr class="separator:ae8821f1a1c2badad3b2649393928e468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a1bd75869078629806f80aa3dd190a490"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a> = false</td></tr>
+<tr class="separator:a1bd75869078629806f80aa3dd190a490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ab91e48949abe3320051cfa7e864287a0"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae8821f1a1c2badad3b2649393928e468"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="user__types_8h.html#ab91e48949abe3320051cfa7e864287a0">cmd_list_t</a> =  std::list&lt;std::string&gt;</td>
+          <td class="memname">#define _log</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span>(<a class="code" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a>) { \</div><div class="line">    std::lock_guard&lt;std::mutex&gt; g(log_mx); \</div><div class="line">    std::cout &lt;&lt; x; \</div><div class="line">    }</div><div class="ttc" id="dbg__log_8h_html_a1bd75869078629806f80aa3dd190a490"><div class="ttname"><a href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a></div><div class="ttdeci">const bool test_log</div><div class="ttdef"><b>Definition:</b> dbg_log.h:6</div></div>
+</div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a1696a9e652482a90f0c5e1c7d0eb5c61"></a>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a1bd75869078629806f80aa3dd190a490"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="user__types_8h.html#a1696a9e652482a90f0c5e1c7d0eb5c61">time_point_t</a> =  std::chrono::system_clock::time_point</td>
+          <td class="memname">const bool test_log = false</td>
         </tr>
       </table>
 </div><div class="memdoc">
