@@ -17,12 +17,28 @@ int main(int argc, char *argv[])
     unsigned int n = static_cast<unsigned int>(std::stoi(argv[1]));
 
     report rp;
+
+    using async_t = decltype(
+    std::async(std::launch::async, &out_base::thread_exec, write_out(&rp)));
+
+    std::list<async_t> threads;
+
     write_out fl1(&rp);
-    auto t1 = std::async(std::launch::async, &out_base::thread_exec, &fl1);
+    threads.emplace_back(
+                std::async(
+                    std::launch::async,
+                    &out_base::thread_exec, std::ref(fl1)));
     write_out fl2(&rp);
-    auto t2 = std::async(std::launch::async, &out_base::thread_exec, &fl2);
+    threads.emplace_back(
+                std::async(
+                    std::launch::async,
+                    &out_base::thread_exec, std::ref(fl2)));
     log_out log(&rp);
-    auto t3 = std::async(std::launch::async, &out_base::thread_exec, &log);
+    threads.emplace_back(
+                std::async(
+                    std::launch::async,
+                    &out_base::thread_exec, std::ref(log)));
+    auto & log_thread = threads.back();
 
     auto notify_handler = [&](auto val) {
         auto ls = std::get<0>(val);
@@ -46,13 +62,14 @@ int main(int argc, char *argv[])
 
     int cmd;
     int blocks;
-    std::tie(cmd, blocks) = t1.get();
-    std::cout << "file1 thread. " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
-    std::tie(cmd, blocks) = t2.get();
-    std::cout << "file2 thread. " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
-    std::tie(cmd, blocks) = t3.get();
-    std::cout << "log thread. " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
+    unsigned int cnt = 0;
+    for(auto & el : threads) {
+        cnt++;
+        std::tie(cmd, blocks) = el.get();
+        std::cout << "thread " << cnt << ". " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
+    }
 
+    std::tie(cmd, blocks) = log_thread.get();
     std::cout << "main thread. "
               << "blocks: " << blocks << ", "
               << "commands: " << cmd << ", "
