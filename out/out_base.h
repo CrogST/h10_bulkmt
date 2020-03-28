@@ -3,6 +3,7 @@
 #include <tuple>
 #include <mutex>
 #include <condition_variable>
+#include <atomic>
 
 #include "user_types.h"
 
@@ -19,10 +20,8 @@ protected:
     std::mutex thread_mx;
     std::condition_variable cv;
 
-    bool sleep = true;
-    std::mutex sleep_mx;
-    bool q = false;
-    std::mutex q_mx;
+    std::atomic_bool sleep = true;
+    std::atomic_bool q = false;
 
     virtual void write() = 0;
 
