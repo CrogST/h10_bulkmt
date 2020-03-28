@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['test_5flog',['test_log',['../dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490',1,'dbg_log.h']]]
+  ['log_5fmx',['log_mx',['../dbg__log_8cpp.html#aad79784449b059e9885e06f895a46e61',1,'log_mx():&#160;dbg_log.cpp'],['../dbg__log_8h.html#aad79784449b059e9885e06f895a46e61',1,'log_mx():&#160;dbg_log.cpp']]]
 ];
