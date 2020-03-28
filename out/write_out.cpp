@@ -17,7 +17,7 @@ write_out::write_out(report * rp) {
     id = id_cnt++;
     id_cnt_mx.unlock();
     ind = id;
-    _log("create file_obj. id = " << id << ", " <<
+    dbg_log("create file_obj. id = " << id << ", " <<
          "cnt = " << id_cnt << std::endl)
     rp->subscribe(this);
 }
@@ -29,10 +29,10 @@ void write_out::signal(cmd_list_t s, time_point_t t) {
     //механизм поочередной обработки событий
     ind = (ind + 1) % cnt;
     if(ind % cnt != 1) {
-        _log("file_obj. id = " << id << " rest" << std::endl)
+        dbg_log("file_obj. id = " << id << " rest" << std::endl)
         return;
     }
-    _log("file_obj. id = " << id << " write" << std::endl)
+    dbg_log("file_obj. id = " << id << " write" << std::endl)
 
     out_base::signal(s, t);
 }
@@ -57,14 +57,14 @@ void write_out::write()
 
     std::ofstream myfile;
     myfile.open(file_name);
-    _log("file: " << file_name << " content: ")
+    dbg_log("file: " << file_name << " content: ")
     ls_mx.lock();
     for(const auto & el : ls) {
         auto val = fib(std::stoi(el));
         myfile << val << std::endl;
-        _log(val)
+        dbg_log(val)
     }
     ls_mx.unlock();
-    _log(std::endl)
+    dbg_log(std::endl)
     myfile.close();
 }

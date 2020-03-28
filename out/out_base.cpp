@@ -23,11 +23,11 @@ void out_base::signal(cmd_list_t s, time_point_t t) {
 }
 std::tuple<int, int> out_base::thread_exec() {
     std::unique_lock<std::mutex> lk(thread_mx);
-    _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl)
+    dbg_log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl)
     q_mx.lock();
     while(!q) {
         q_mx.unlock();
-        _log("thread " << std::this_thread::get_id() << ": wait" << std::endl);
+        dbg_log("thread " << std::this_thread::get_id() << ": wait" << std::endl);
 
         sleep_mx.lock();
         sleep = true;
@@ -38,7 +38,7 @@ std::tuple<int, int> out_base::thread_exec() {
             std::lock_guard<std::mutex> lck_q(q_mx);
             return !sleep || q;
         });
-        _log("thread " << std::this_thread::get_id() << ": " << "wake up" << std::endl)
+        dbg_log("thread " << std::this_thread::get_id() << ": " << "wake up" << std::endl)
 
         sleep_mx.lock();
         auto sl = sleep;
@@ -47,7 +47,7 @@ std::tuple<int, int> out_base::thread_exec() {
 
         q_mx.lock();
     }
-    _log("thread " << std::this_thread::get_id() << ": " << "quit" << std::endl)
+    dbg_log("thread " << std::this_thread::get_id() << ": " << "quit" << std::endl)
     return std::tuple(cmd_cnt, blocks_cnt);
 }
 void out_base::drop() {

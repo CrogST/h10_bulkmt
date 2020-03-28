@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "dbg_log.h"
+
 log_out::log_out(report * rp) {
     rp->subscribe(this);
 }

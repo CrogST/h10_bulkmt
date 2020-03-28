@@ -1,3 +1,3 @@
 #include "dbg_log.h"
 
-std::mutex log_mx;
+std::mutex dbg_log_mx;
