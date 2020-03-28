@@ -1,14 +1,14 @@
 
 #include "collect.h"
 
-res_t collect::done() {
+res_opt_t collect::done() {
     if(ls.size() == 0) return std::nullopt;
-    cmd_list_t res = std::move(ls);
+    auto res = std::make_pair(std::move(ls), save_time);
     ls.clear();
-    return std::make_pair(std::move(res), save_time);
+    return res;
 }
 
-res_t collect::collect_clever(std::string val) {    
+res_opt_t collect::collect_clever(std::string val) {
     if(val.compare("{") == 0) {
         deep_cnt++;
     } else if(val.compare("}") == 0) {
@@ -25,7 +25,7 @@ res_t collect::collect_clever(std::string val) {
     return std::nullopt;
 }
 
-res_t collect::collect_N(std::string val) {
+res_opt_t collect::collect_N(std::string val) {
     if(val.compare("{") == 0) {
         handle_type = type::collect_wait;
         collect_clever(val);
@@ -45,15 +45,14 @@ collect::collect(unsigned int n) : N(n) {
     handle_type = type::collect_n;
 }
 
-res_t collect::handle(std::string str) {
+res_opt_t collect::handle(std::string str) {
     switch (handle_type) {
     case type::collect_n: return collect_N(str);
     case type::collect_wait: return collect_clever(str);
     }
-    return std::nullopt;
 }
 
-res_t collect::get_now() {
+res_opt_t collect::get_rest() {
     if(handle_type == type::collect_n)
         return done();
     else return std::nullopt;
