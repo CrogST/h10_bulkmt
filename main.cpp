@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
     auto res = col.get_rest();
     if(res) notify_handler(res.value());
 
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
     rp.drop_all();
 
     unsigned int cnt = 0;

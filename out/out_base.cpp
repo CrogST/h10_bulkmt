@@ -34,8 +34,8 @@ std::tuple<int, int> out_base::thread_exec() {
         sleep_mx.unlock();
 
         cv.wait(lk, [&] {
-            std::lock_guard(sleep_mx);
-            std::lock_guard(q_mx);
+            std::lock_guard<std::mutex> lck_mx(sleep_mx);
+            std::lock_guard<std::mutex> lck_q(q_mx);
             return !sleep || q;
         });
         _log("thread " << std::this_thread::get_id() << ": " << "wake up" << std::endl)
