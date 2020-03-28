@@ -16,11 +16,13 @@ static std::mutex log_mx;
     std::cout << x; \
     }
 
+//fibbonachi
 auto fib(int n) {
     if(n<=2) return 1;
     return fib(n-1) + fib(n-2);
 }
 
+//factorial
 auto fact(int n) {
     if(n == 0) return 1;
     return n * fact(n-1);
@@ -33,9 +35,11 @@ protected:
     int cmd_cnt = 0;
 
     cmd_list_t ls; //список полученных блоков
+    std::mutex ls_mx;
     time_point_t tp; //время получения блока
+    std::mutex tp_mx;
     //для потока
-    std::mutex mx;
+    std::mutex thread_mx;
     std::condition_variable cv;
     bool sleep = true;
     bool q = false;
@@ -46,8 +50,12 @@ public:
     virtual ~out_base() = default;
     virtual void signal(cmd_list_t s, time_point_t t) {
         //запоминаем полученные данные
+        tp_mx.lock();
+        ls_mx.lock();
         ls = s;
         tp = t;
+        tp_mx.unlock();
+        ls_mx.unlock();
         //метрики
         blocks_cnt++;
         cmd_cnt += s.size();
@@ -56,7 +64,7 @@ public:
         cv.notify_one();
     }
     auto thread_exec() {
-        std::unique_lock<std::mutex> lk(mx);
+        std::unique_lock<std::mutex> lk(thread_mx);
         _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl)
         while(!q) {
             _log("thread " << std::this_thread::get_id() << ": wait" << std::endl)
@@ -68,7 +76,6 @@ public:
         _log("thread " << std::this_thread::get_id() << ": " << "quit" << std::endl)
         return std::tuple(cmd_cnt, blocks_cnt);
     }
-
     void quite() {
         q = true;
         cv.notify_one();
@@ -82,10 +89,12 @@ public:
     log_out(report * rp);
     void write() override {
         std::cout << "bulk:";
+        ls_mx.lock();
         for(auto el = ls.begin(); el != ls.end(); el++) {
             if(el != ls.begin()) std::cout << ",";
             std::cout << " " << fact(std::stoi(*el));
         }
+        ls_mx.unlock();
         std::cout << std::endl;
     }
 };
@@ -117,18 +126,22 @@ public:
         id_ss << std::this_thread::get_id();
 
         //create file name
+        tp_mx.lock();
         auto cnt = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch());
+        tp_mx.unlock();
         auto name = std::to_string(cnt.count());
         auto file_name = "bulk" + name + "_" + id_ss.str() + ".log";
 
         std::ofstream myfile;
         myfile.open(file_name);
         _log("file: " << file_name << " content: ")
+        ls_mx.lock();
         for(const auto & el : ls) {
             auto val = fib(std::stoi(el));
             myfile << val << std::endl;
             _log(val)
         }
+        ls_mx.unlock();
         _log(std::endl)
         myfile.close();
     }
