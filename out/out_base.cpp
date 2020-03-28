@@ -23,7 +23,7 @@ void out_base::signal(cmd_list_t s, time_point_t t) {
 }
 std::tuple<int, int> out_base::thread_exec() {
     std::unique_lock<std::mutex> lk(thread_mx);
-    _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl);
+    _log("thread " << std::this_thread::get_id() << ": " << "started" << std::endl)
     q_mx.lock();
     while(!q) {
         q_mx.unlock();
@@ -33,8 +33,16 @@ std::tuple<int, int> out_base::thread_exec() {
         sleep = true;
         sleep_mx.unlock();
 
-        cv.wait(lk, [&] { return !sleep || q; } );
-        _log("thread " << std::this_thread::get_id() << ": " << "wake up" << std::endl);
+        cv.wait(lk, [&] {
+            sleep_mx.lock();
+            q_mx.lock();
+            auto sl = sleep;
+            auto q_tmp = q;
+            sleep_mx.unlock();
+            q_mx.unlock();
+            return !sl || q_tmp;
+        });
+        _log("thread " << std::this_thread::get_id() << ": " << "wake up" << std::endl)
 
         sleep_mx.lock();
         auto sl = sleep;

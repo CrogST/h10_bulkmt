@@ -43,11 +43,18 @@ int main(int argc, char *argv[])
                 std::async(
                     std::launch::async,
                     &out_base::thread_exec, std::ref(log)));
-    auto & log_thread = threads.back();
+
+    //счетчики
+    unsigned int main_cmd = 0;
+    unsigned int main_blocks = 0;
 
     auto notify_handler = [&](auto val) {
         auto ls = std::get<0>(val);
         auto tp = std::get<1>(val);
+
+        main_cmd += ls.size();
+        main_blocks++;
+
         rp.notify_all(ls, tp);
     };
 
@@ -65,19 +72,20 @@ int main(int argc, char *argv[])
 
     rp.drop_all();
 
-    int cmd;
-    int blocks;
     unsigned int cnt = 0;
     for(auto & el : threads) {
+        int cmd;
+        int blocks;
         cnt++;
         std::tie(cmd, blocks) = el.get();
-        std::cout << "thread " << cnt << ". " << "blocks: " << blocks << ", " << "commands: " << cmd << std::endl;
+        std::cout << "thread " << cnt << ". " <<
+                     "blocks: " << blocks << ", " <<
+                     "commands: " << cmd << std::endl;
     }
 
-    std::tie(cmd, blocks) = log_thread.get();
     std::cout << "main thread. "
-              << "blocks: " << blocks << ", "
-              << "commands: " << cmd << ", "
+              << "blocks: " << main_blocks << ", "
+              << "commands: " << main_cmd << ", "
               << "lines: " << line_cnt
               << std::endl;
 

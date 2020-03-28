@@ -7,11 +7,10 @@
 #include "user_types.h"
 
 class out_base {
-protected:
     //метрики
     int blocks_cnt = 0;
     int cmd_cnt = 0;
-
+protected:    
     cmd_list_t ls; //список полученных блоков
     std::mutex ls_mx;
     time_point_t tp; //время получения блока
