@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['report',['report',['../classreport.html',1,'']]],
-  ['report_2ecpp',['report.cpp',['../report_8cpp.html',1,'']]],
-  ['report_2eh',['report.h',['../report_8h.html',1,'']]],
-  ['res_5fopt_5ft',['res_opt_t',['../collect_8h.html#a10326e895004913665cd36a431ab37b1',1,'collect.h']]],
-  ['res_5ft',['res_t',['../collect_8h.html#aa301379b0bbacac20f0bad426bebcf15',1,'collect.h']]]
+  ['test_5flog',['test_log',['../dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490',1,'dbg_log.h']]],
+  ['time_5fpoint_5ft',['time_point_t',['../user__types_8h.html#a1696a9e652482a90f0c5e1c7d0eb5c61',1,'user_types.h']]]
 ];

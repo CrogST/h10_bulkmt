@@ -109,23 +109,23 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ae8821f1a1c2badad3b2649393928e468"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#ae8821f1a1c2badad3b2649393928e468">_log</a>(x)</td></tr>
-<tr class="separator:ae8821f1a1c2badad3b2649393928e468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60a7f82919a932a2f17dbf7542f1ffe6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#a60a7f82919a932a2f17dbf7542f1ffe6">dbg_log</a>(x)</td></tr>
+<tr class="separator:a60a7f82919a932a2f17dbf7542f1ffe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a1bd75869078629806f80aa3dd190a490"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a> = false</td></tr>
 <tr class="separator:a1bd75869078629806f80aa3dd190a490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad79784449b059e9885e06f895a46e61"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#aad79784449b059e9885e06f895a46e61">log_mx</a></td></tr>
-<tr class="separator:aad79784449b059e9885e06f895a46e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3dece60623c4a3f38af68439e050be7"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dbg__log_8h.html#aa3dece60623c4a3f38af68439e050be7">dbg_log_mx</a></td></tr>
+<tr class="separator:aa3dece60623c4a3f38af68439e050be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ae8821f1a1c2badad3b2649393928e468"></a>
+<a class="anchor" id="a60a7f82919a932a2f17dbf7542f1ffe6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _log</td>
+          <td class="memname">#define dbg_log</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">x</td><td>)</td>
@@ -133,18 +133,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a>) { \</div><div class="line">    std::lock_guard&lt;std::mutex&gt; g(<a class="code" href="dbg__log_8h.html#aad79784449b059e9885e06f895a46e61">log_mx</a>); \</div><div class="line">    std::cout &lt;&lt; x; \</div><div class="line">    }</div><div class="ttc" id="dbg__log_8h_html_aad79784449b059e9885e06f895a46e61"><div class="ttname"><a href="dbg__log_8h.html#aad79784449b059e9885e06f895a46e61">log_mx</a></div><div class="ttdeci">std::mutex log_mx</div><div class="ttdef"><b>Definition:</b> dbg_log.cpp:3</div></div>
-<div class="ttc" id="dbg__log_8h_html_a1bd75869078629806f80aa3dd190a490"><div class="ttname"><a href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a></div><div class="ttdeci">const bool test_log</div><div class="ttdef"><b>Definition:</b> dbg_log.h:6</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code" href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a>) { \</div><div class="line">    std::lock_guard&lt;std::mutex&gt; g(<a class="code" href="dbg__log_8h.html#aa3dece60623c4a3f38af68439e050be7">dbg_log_mx</a>); \</div><div class="line">    std::cout &lt;&lt; x; \</div><div class="line">    }</div><div class="ttc" id="dbg__log_8h_html_a1bd75869078629806f80aa3dd190a490"><div class="ttname"><a href="dbg__log_8h.html#a1bd75869078629806f80aa3dd190a490">test_log</a></div><div class="ttdeci">const bool test_log</div><div class="ttdef"><b>Definition:</b> dbg_log.h:6</div></div>
+<div class="ttc" id="dbg__log_8h_html_aa3dece60623c4a3f38af68439e050be7"><div class="ttname"><a href="dbg__log_8h.html#aa3dece60623c4a3f38af68439e050be7">dbg_log_mx</a></div><div class="ttdeci">std::mutex dbg_log_mx</div><div class="ttdef"><b>Definition:</b> dbg_log.cpp:3</div></div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="aad79784449b059e9885e06f895a46e61"></a>
+<a class="anchor" id="aa3dece60623c4a3f38af68439e050be7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::mutex log_mx</td>
+          <td class="memname">std::mutex dbg_log_mx</td>
         </tr>
       </table>
 </div><div class="memdoc">

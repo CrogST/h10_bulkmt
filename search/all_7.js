@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['notify_5fall',['notify_all',['../classreport.html#aefe211b52c3ad1f245388b40cc799514',1,'report']]]
+  ['subscribe',['subscribe',['../classreport.html#a18f9439720a91f3d7fce9ac32947a538',1,'report']]]
 ];

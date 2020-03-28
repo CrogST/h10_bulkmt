@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['handle',['handle',['../classcollect.html#ae364551d251dcf7306d81255c56437c1',1,'collect']]]
+  ['main',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
+  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]]
 ];
