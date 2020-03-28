@@ -16,9 +16,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(${bin_name}
     main.cpp
     collect.cpp
-    class_out.h
+    report.cpp
+    out/out_base.cpp
+    out/write_out.cpp
+    out/log_out.cpp
     .travis.yml
     .doxygen.conf
+    )
+
+target_include_directories(${bin_name} PUBLIC
+    .
+    out
     )
 
 set_target_properties(${bin_name} PROPERTIES
@@ -27,8 +35,8 @@ set_target_properties(${bin_name} PROPERTIES
     COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
     COMPILE_OPTIONS "-pthread"
     LINK_FLAGS "-pthread"
-#    COMPILE_OPTIONS "-fsanitize=thread"
-#    LINK_FLAGS "-fsanitize=thread"
+    COMPILE_OPTIONS "-fsanitize=thread"
+    LINK_FLAGS "-fsanitize=thread"
     )
 
 target_link_libraries(${bin_name}

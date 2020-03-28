@@ -3,10 +3,15 @@
 #include <vector>
 #include <chrono>
 #include <future>
+#include <iostream>
+#include <thread>
 
 #include "collect.h"
-#include "class_out.h"
+#include "report.h"
 
+#include "out_base.h"
+#include "write_out.h"
+#include "log_out.h"
 
 int main(int argc, char *argv[])
 {
