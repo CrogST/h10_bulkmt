@@ -20,6 +20,7 @@ add_executable(${bin_name}
     out/out_base.cpp
     out/write_out.cpp
     out/log_out.cpp
+    dbg_log.cpp
     .travis.yml
     .doxygen.conf
     )
